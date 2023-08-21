@@ -1,0 +1,7 @@
+Adicionar:
+	-adicionar Threads para otimizar
+	-converter mp4 => mp3
+	-baixar listas de links (playlists)
+	-design
+	-separar 'frontend' e 'backend'
+	-escolher onde salvar os vídeos
