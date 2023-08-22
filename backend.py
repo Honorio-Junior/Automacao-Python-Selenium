@@ -14,6 +14,8 @@ from selenium.webdriver.firefox.options import Options as OptionsFX
 
 import requests
 from time import sleep
+from subprocess import CREATE_NO_WINDOW
+
 
 class Automacao():
 
@@ -28,23 +30,32 @@ class Automacao():
         try:
             if browser == 'chrome':
                 options = OptionsCR()
+                options.add_experimental_option("excludeSwitches", ["enable-logging"])
                 options.add_argument("--headless")
                 options.add_argument("--disable-gpu")
+                options.add_argument("start-maximized")
                 service = ServiceCR(ChromeDriverManager().install())
+                service.creationflags = CREATE_NO_WINDOW
                 self.navegador = webdriver.Chrome(service=service, options=options)
 
             elif browser == 'firefox':
                 options = OptionsFX()
+                options.add_experimental_option("excludeSwitches", ["enable-logging"])
                 options.add_argument("--headless")
                 options.add_argument("--disable-gpu")
+                options.add_argument("start-maximized")
                 service = ServiceFX(GeckoDriverManager().install())
+                service.creationflags = CREATE_NO_WINDOW
                 self.navegador = webdriver.Firefox(service=service, options=options)
 
             elif browser == 'edge':
                 options = OptionsED()
+                options.add_experimental_option("excludeSwitches", ["enable-logging"])
                 options.add_argument("--headless")
                 options.add_argument("--disable-gpu")
+                options.add_argument("start-maximized")
                 service = ServiceED(EdgeChromiumDriverManager().install())
+                service.creationflags = CREATE_NO_WINDOW
                 self.navegador = webdriver.Edge(service=service, options=options)
         except Exception as e:
             print(e)

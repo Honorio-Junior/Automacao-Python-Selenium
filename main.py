@@ -4,6 +4,8 @@ from threading import Thread
 from time import sleep
 import backend
 
+
+
 browser_select = ''
 selenium = backend.Automacao()
 
@@ -28,6 +30,7 @@ def baixar(browser, link, bt_baixar, rb1,rb2,rb3):
         link.insert(0, 'Informe um LINK e um NAVEGADOR!')
         sleep(1)
 
+    browser_select = browser
     link.delete(0, END)
     bt_baixar.configure(state=NORMAL)
     rb1.configure(state=NORMAL) ; rb2.configure(state=NORMAL) ; rb3.configure(state=NORMAL)
