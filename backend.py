@@ -15,31 +15,45 @@ from selenium.webdriver.firefox.options import Options as OptionsFX
 import requests
 from time import sleep
 
-
 class Automacao():
 
-    def __init__(self, browser):
+    def __init__(self):
+        pass
 
-        if browser == 'chrome':
-            options = OptionsCR()
-            options.add_argument("--headless")
-            options.add_argument("--disable-gpu")
-            service = ServiceCR(ChromeDriverManager().install())
-            self.navegador = webdriver.Chrome(service=service, options=options)
+    def set_browser(self, browser):
+        try:
+            self.close()
+        except:
+            pass
+        try:
+            if browser == 'chrome':
+                options = OptionsCR()
+                options.add_argument("--headless")
+                options.add_argument("--disable-gpu")
+                service = ServiceCR(ChromeDriverManager().install())
+                self.navegador = webdriver.Chrome(service=service, options=options)
 
-        elif browser == 'firefox':
-            options = OptionsFX()
-            options.add_argument("--headless")
-            options.add_argument("--disable-gpu")
-            service = ServiceFX(GeckoDriverManager().install())
-            self.navegador = webdriver.Firefox(service=service, options=options)
+            elif browser == 'firefox':
+                options = OptionsFX()
+                options.add_argument("--headless")
+                options.add_argument("--disable-gpu")
+                service = ServiceFX(GeckoDriverManager().install())
+                self.navegador = webdriver.Firefox(service=service, options=options)
 
-        elif browser == 'edge':
-            options = OptionsED()
-            options.add_argument("--headless")
-            options.add_argument("--disable-gpu")
-            service = ServiceED(EdgeChromiumDriverManager().install())
-            self.navegador = webdriver.Edge(service=service, options=options)
+            elif browser == 'edge':
+                options = OptionsED()
+                options.add_argument("--headless")
+                options.add_argument("--disable-gpu")
+                service = ServiceED(EdgeChromiumDriverManager().install())
+                self.navegador = webdriver.Edge(service=service, options=options)
+        except Exception as e:
+            print(e)
+
+    def close(self):
+        try:
+            self.navegador.quit()
+        except Exception as e:
+            print(e)
 
     def savefrom(self, link):
 
@@ -47,6 +61,7 @@ class Automacao():
         url_video = link
 
         # insere o link do video
+        print('insere o link do video')
         while True:
             try:
                 self.navegador.find_element('xpath', '//*[@id="sf_url"]').send_keys(url_video)
@@ -56,6 +71,7 @@ class Automacao():
                 break
 
         # clicka em procurar o link do video
+        print('clicka em procurar o link do video')
         while True:
             try:
                 self.navegador.find_element('xpath', '//*[@id="sf_submit"]').click()
@@ -65,6 +81,7 @@ class Automacao():
                 break
 
         # Procura o link de download
+        print('Procura o link de download')
         while True:
             try:
                 linkDown = self.navegador.find_element('xpath', '//*[@id="sf_result"]/div/div[1]/div[2]/div[2]/div[1]/a')
@@ -76,6 +93,7 @@ class Automacao():
                 break
 
         # Procura e salva o título do vídeo
+        print('Procura e salva o título do vídeo')
         while True:
             try:
                 titulo = self.navegador.find_element('xpath', '//*[@id="sf_result"]/div/div[1]/div[2]/div[1]/div[1]')
@@ -89,17 +107,18 @@ class Automacao():
         return linkDown, titulo
 
     def baixar(self, servico, link):
+        try:
+            if servico == 'savefrom':
+                linkDown, titulo = self.savefrom(link)
+                pass
 
-        if servico == 'savefrom':
-            linkDown, titulo = self.savefrom(link)
-            pass
+            r = requests.get(linkDown)
+            with open(f'{titulo}.mp4', 'wb') as file:
+                file.write(r.content)
 
-        r = requests.get(linkDown)
-        with open(f'{titulo}.mp4', 'wb') as file:
-            file.write(r.content)
+            print('Video baixado!!!\n')
+        except Exception as e:
+            print(e)
 
-        print('Video baixado!!!\n')
-
-auto = Automacao('firefox')
-
-auto.baixar('savefrom', 'https://www.youtube.com/watch?v=-Zj_Gm8cRdw')
+if __name__ == "__main__":
+    print("oi")
