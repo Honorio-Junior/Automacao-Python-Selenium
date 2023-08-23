@@ -14,7 +14,7 @@ def baixar(browser, link, bt_baixar, rb1,rb2,rb3):
     url = link.get()
 
     link.delete(0, END)
-    if browser_select != browser and url != '' and not(' ' in url):
+    if browser_select != browser:
         link.insert(0, 'Iniciando serviço... Esse processo só ocorre uma vez por navegador!')
         selenium.set_browser(browser)
     
