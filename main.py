@@ -6,9 +6,15 @@ import backend
 
 
 
-browser_select = ''
-selenium = backend.Automacao()
+browser_select = '' # guarda qual o navegador escolhido
+selenium = backend.Automacao() # cria um objeto da class da automação
 
+#Função que faz a solicitação ao backend para fazer a automação
+#         link: link informado pelo usuário
+#      browser: navegador escolho
+#    bt_baixar: ativa o botão para enviar outra solicitação ao bk
+#  br1,br2,br3: desativa os radiobutton
+   
 def baixar(browser, link, bt_baixar, rb1,rb2,rb3):
     global browser_select
     url = link.get()
@@ -36,7 +42,7 @@ def baixar(browser, link, bt_baixar, rb1,rb2,rb3):
     rb1.configure(state=NORMAL) ; rb2.configure(state=NORMAL) ; rb3.configure(state=NORMAL)
 
 
-
+#Função para pegar a ação do botão e criar uma thread para a solicitação
 def click(browser, bt_baixar, link, rb1,rb2,rb3):
     bt_baixar.configure(state=DISABLED)
     rb1.configure(state=DISABLED) ; rb2.configure(state=DISABLED) ; rb3.configure(state=DISABLED)
@@ -76,4 +82,4 @@ bt_baixar.pack(pady=5)
 #Loop da janela
 root.mainloop()
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-selenium.close()
+selenium.close() #Finaliza os serviços do selenium

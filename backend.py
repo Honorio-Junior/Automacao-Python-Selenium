@@ -1,61 +1,46 @@
+#Selenium webdriver
 from selenium import webdriver
-
-from webdriver_manager.chrome import ChromeDriverManager
+#Chrome
 from selenium.webdriver.chrome.service import Service as ServiceCR
 from selenium.webdriver.chrome.options import Options as OptionsCR
-
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
+#Edge
 from selenium.webdriver.edge.service import Service as ServiceED
 from selenium.webdriver.edge.options import Options as OptionsED
-
-from webdriver_manager.firefox import GeckoDriverManager
+#Firefox
 from selenium.webdriver.firefox.service import Service as ServiceFX
 from selenium.webdriver.firefox.options import Options as OptionsFX
-
+#Imports
 import requests
 from time import sleep
-from subprocess import CREATE_NO_WINDOW
 
 
 class Automacao():
 
-    def __init__(self):
-        pass
-
     def set_browser(self, browser):
         try:
             self.close()
-        except:
-            pass
+        except Exception as e:
+            print(e)
         try:
             if browser == 'chrome':
                 options = OptionsCR()
                 options.add_experimental_option("excludeSwitches", ["enable-logging"])
-                options.add_argument("--headless")
-                options.add_argument("--disable-gpu")
-                options.add_argument("start-maximized")
-                service = ServiceCR(ChromeDriverManager().install())
-                service.creationflags = CREATE_NO_WINDOW
+                options.add_argument("--headless");options.add_argument("--disable-gpu")
+                service = ServiceCR()
                 self.navegador = webdriver.Chrome(service=service, options=options)
 
             elif browser == 'firefox':
                 options = OptionsFX()
                 options.add_experimental_option("excludeSwitches", ["enable-logging"])
-                options.add_argument("--headless")
-                options.add_argument("--disable-gpu")
-                options.add_argument("start-maximized")
-                service = ServiceFX(GeckoDriverManager().install())
-                service.creationflags = CREATE_NO_WINDOW
+                options.add_argument("--headless");options.add_argument("--disable-gpu")
+                service = ServiceFX()
                 self.navegador = webdriver.Firefox(service=service, options=options)
 
             elif browser == 'edge':
                 options = OptionsED()
                 options.add_experimental_option("excludeSwitches", ["enable-logging"])
-                options.add_argument("--headless")
-                options.add_argument("--disable-gpu")
-                options.add_argument("start-maximized")
-                service = ServiceED(EdgeChromiumDriverManager().install())
-                service.creationflags = CREATE_NO_WINDOW
+                options.add_argument("--headless");options.add_argument("--disable-gpu")
+                service = ServiceED()
                 self.navegador = webdriver.Edge(service=service, options=options)
         except Exception as e:
             print(e)
@@ -132,4 +117,4 @@ class Automacao():
             print(e)
 
 if __name__ == "__main__":
-    print("oi")
+    pass
