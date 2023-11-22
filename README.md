@@ -1,6 +1,5 @@
 # Automacao_com_python-Selenium
-App com interface que baixa vídeos suportados pelo site savefrom.net, usando automação python usando o selenium
-
+App com interface que baixa vídeos suportados pelo site savefrom.net, usando automação python, com selenium
 # Itens a adicionar>
 * converter mp4 => mp3
 * baixar listas de links (playlists)
